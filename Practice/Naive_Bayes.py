@@ -48,7 +48,7 @@ def summarizeByClass(dataset):
 	return summaries
 
 def calculateProb(x, mean, stdev):
-    exponent = math.exp(-(math.pow(x-mean, 2) / (2 * math.pow(stdev, 2))))
+    exponent = math.exp(-(math.pow(x-mean, 2)) / (2 * math.pow(stdev, 2)))
     return (1 / (math.sqrt(2 * math.pi) * stdev)) * exponent
 
 def calculateClassProb(summaries, inputVector):
@@ -56,8 +56,9 @@ def calculateClassProb(summaries, inputVector):
     for classValue, classSummaries in summaries.items():
         probabilities[classValue] = 1
         for i in range(len(classSummaries)):
+            mean, stdev = classSummaries[i]
             x = inputVector[i]
-            probabilities[classValue] *= calculateProb(x,mean, stdev)
+            probabilities[classValue] *= calculateProb(x, mean, stdev)
     return probabilities
 
 def predict(summaries, inputVector):
